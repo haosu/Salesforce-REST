@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-SalesforceOAuth::Application.config.secret_token = '59b475244e80f1eb2ba46332946ed116c01207150914c5ebb83d5ca4a0f338bc0569e1df5917574bdc384b8cf0ccc8b40a1c756d8c9d28879074f16e4014c43d'
+SalesforceOAuth::Application.config.secret_token = '3987be9df7d45315c651696dbe99b961629371bcd55fa8768cea1d6529b74f223f58a1598d190c309797b70748bef183dd168f04b83d53772b10d3e46d1e10e3'
