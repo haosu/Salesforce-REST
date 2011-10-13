@@ -15,14 +15,39 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    redirect_to :controller => 'auth', :action => 'index'
+    # check cookie
+    # refresh token
+    # auth
 
-    #redirect_to "auth#index"
-    # check if authenticated
-    # authenticated ?
-    #   continue
-    # else
-    #   go to authentication url
+    puts session.to_json
+
+    if session[:oauth_access_token].nil? || session[:oauth_access_token].empty?
+
+      redirect_to :controller => 'auth', :action => 'index'
+
+    else
+
+      if !(session[:oauth_expires_at].nil?) && session[:oauth_expires_at].to_datetime < DateTime.now
+        begin
+          access_token = Salesforce::Authentication.refresh(
+            SalesforceOAuth::Application.config.api_key,
+            SalesforceOAuth::Application.config.api_secret, 
+            session[:oauth_refresh_token]
+          )
+        rescue
+          # delete cookie
+
+          redirect_to :controller => 'auth', :action => 'index'
+          return
+        end
+
+        session[:oauth_access_token] = access_token.token
+        session[:oauth_refresh_token] = access_token.refresh_token
+        session[:oauth_expires_at] = access_token.expires_in + DateTime.now
+      end
+
+    end
+
   end
   
 end

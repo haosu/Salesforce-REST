@@ -31,6 +31,7 @@ SalesforceOAuth::Application.configure do
 
   config.rest_url         = /prerelna[0-9]*/
   config.soap_url         = '.pre.salesforce.com/services/Soap/c/22.0/'
+  config.instance_version = '/services/data/v23.0/'
 
   config.redirect_uri = 'http://localhost:3000/auth/callback'
   config.rest_site    = 'https://prerellogin.pre.salesforce.com'
