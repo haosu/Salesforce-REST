@@ -24,7 +24,8 @@ class ApplicationController < ActionController::Base
     if session[:oauth_access_token].nil? || session[:oauth_access_token].empty?
 
       redirect_to :controller => 'auth', :action => 'index'
-
+      return
+      
     else
 
       if !(session[:oauth_expires_at].nil?) && session[:oauth_expires_at].to_datetime < DateTime.now
@@ -36,11 +37,12 @@ class ApplicationController < ActionController::Base
           )
         rescue
           # delete cookie
-
+          reset_session
           redirect_to :controller => 'auth', :action => 'index'
           return
         end
 
+        # save session
         session[:oauth_access_token] = access_token.token
         session[:oauth_refresh_token] = access_token.refresh_token
         session[:oauth_expires_at] = access_token.expires_in + DateTime.now

@@ -19,26 +19,28 @@ class AuthController < ApplicationController
       :grant_type => 'authorization_code'
     )
 
-    # API URL
-    instance_url = access_token.params['instance_url'] + SalesforceOAuth::Application.config.instance_version
-
-    puts access_token.inspect
+    instance_url = access_token.params['instance_url']
 
     # lol not secure
     #session[:oauth_code] = code
     session[:oauth_access_token] = access_token.token
     session[:oauth_refresh_token] = access_token.refresh_token
     session[:oauth_expires_at] = access_token.expires_at
+    session[:oauth_instace_url] = instance_url
 
     redirect_to :controller => 'home', :action => 'index'
   end
 
   def reset
-    reset_session
-  
-    puts session.to_json
+    logout_url = "home#index"
 
-    redirect_to :controller => 'home', :action => 'index'
+    unless session[:oauth_instace_url].nil?
+      logout_url = session[:oauth_instace_url] + '/secur/logout.jsp'
+    end
+
+    reset_session
+
+    redirect_to logout_url
   end
 
 end
