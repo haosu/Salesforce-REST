@@ -33,6 +33,9 @@ SalesforceOAuth::Application.configure do
   config.soap_url         = '.pre.salesforce.com/services/Soap/c/22.0/'
   config.instance_version = '/services/data/v23.0/'
 
+
+  config.logout_endpoint = '/secur/logout.jsp'
+
   config.redirect_uri = 'http://localhost:3000/auth/callback'
   config.rest_site    = 'https://prerellogin.pre.salesforce.com'
   config.refresh_site = 'https://prerellogin.pre.salesforce.com/services/oauth2/token'

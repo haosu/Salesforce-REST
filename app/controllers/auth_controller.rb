@@ -1,8 +1,11 @@
+require 'salesforce'
+
 class AuthController < ApplicationController
   skip_before_filter :authenticate
 
   def index
-    url = client.auth_code.authorize_url(
+
+    url = Salesforce::Authentication.client.auth_code.authorize_url(
       :redirect_uri => SalesforceOAuth::Application.config.redirect_uri,
       :response_type => 'code'
     )
@@ -13,20 +16,13 @@ class AuthController < ApplicationController
   def callback
     code = params[:code].to_s
 
-    access_token = client.auth_code.get_token(
+    access_token = Salesforce::Authentication.client.auth_code.get_token(
       code,
       :redirect_uri => SalesforceOAuth::Application.config.redirect_uri,
       :grant_type => 'authorization_code'
     )
 
-    instance_url = access_token.params['instance_url']
-
-    # lol not secure
-    #session[:oauth_code] = code
-    session[:oauth_access_token] = access_token.token
-    session[:oauth_refresh_token] = access_token.refresh_token
-    session[:oauth_expires_at] = access_token.expires_at
-    session[:oauth_instace_url] = instance_url
+    Salesforce::Authentication.save_session session, access_token    
 
     redirect_to :controller => 'home', :action => 'index'
   end
@@ -35,7 +31,7 @@ class AuthController < ApplicationController
     logout_url = "home#index"
 
     unless session[:oauth_instace_url].nil?
-      logout_url = session[:oauth_instace_url] + '/secur/logout.jsp'
+      logout_url = session[:oauth_instace_url] + SalesforceOAuth::Application.config.logout_endpoint
     end
 
     reset_session
