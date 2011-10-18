@@ -23,13 +23,27 @@ module Salesforce
         token = OAuth2::AccessToken.refresh_token(client_value, refresh_token)
       end
 
-      def save_session session, access_token
+      def save_token session, access_token
         # lol not secure
         #session[:oauth_code] = code
         session[:oauth_access_token] = access_token.token
         session[:oauth_refresh_token] = access_token.refresh_token
         session[:oauth_expires_at] = access_token.expires_at
+        session[:oauth_expires_in] = access_token.expires_in
         session[:oauth_instace_url] = access_token.params['instance_url']
+      end
+
+      def get_token session
+        OAuth2::AccessToken.new(
+          self.client,
+          session[:oauth_access_token], 
+          {
+            "expires_in" => session[:oauth_expires_in],
+            "expires_at" => session[:oauth_expires_at],
+            "refresh_token" => session[:refresh_token],
+            "instance_url" => session[:oauth_instace_url]
+          }
+        )
       end
 
     end

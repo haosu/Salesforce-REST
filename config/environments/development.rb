@@ -30,8 +30,8 @@ SalesforceOAuth::Application.configure do
 
 
   config.rest_url         = /prerelna[0-9]*/
-  config.soap_url         = '.salesforce.com/services/Soap/c/22.0/'
-  config.instance_version = '/services/data/v22.0/'
+  config.soap_url         = '.salesforce.com/services/Soap/c/22.0'
+  config.instance_version = '/services/data/v22.0'
 
 
   config.logout_endpoint = '/secur/logout.jsp'

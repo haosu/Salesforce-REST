@@ -22,7 +22,7 @@ class AuthController < ApplicationController
       :grant_type => 'authorization_code'
     )
 
-    Salesforce::Authentication.save_session session, access_token    
+    Salesforce::Authentication.save_token session, access_token
 
     redirect_to :controller => 'home', :action => 'index'
   end
