@@ -39,4 +39,16 @@ class AuthController < ApplicationController
     redirect_to logout_url
   end
 
+  def refresh
+    # BROKEN!
+    # does not recreate the access_token correctly
+    access_token = Salesforce::Authentication.get_token session
+    
+    access_token = Salesforce::Authentication.refresh_session access_token
+
+    Salesforce::Authentication.save_token session, access_token
+
+    render :json => access_token.to_json
+  end
+
 end

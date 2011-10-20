@@ -1,2 +1,4 @@
-require 'salesforce/authentication'
-require 'salesforce/rest'
+module Salesforce
+  class << self
+  end
+end
