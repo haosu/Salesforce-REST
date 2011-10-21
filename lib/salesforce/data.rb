@@ -18,6 +18,12 @@ module Salesforce
         Salesforce::Data::Rest.sobjects access_token, {"sobject" => sobject, "id" => id}
       end
 
+      def feed_by_record access_token, sobject, id
+      end
+
+      def profile access_token, id  
+      end
+
     end
 
   end

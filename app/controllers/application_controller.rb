@@ -18,7 +18,8 @@ class ApplicationController < ActionController::Base
 
       if !(session[:oauth_expires_at].nil?) && session[:oauth_expires_at].to_datetime < DateTime.now
         begin
-          access_token = Salesforce::Authentication.refresh session[:oauth_refresh_token]
+          redirect_to :controller => 'auth', :action => 'refresh'
+          return
         rescue
           # delete cookie
           reset_session

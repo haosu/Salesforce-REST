@@ -40,15 +40,11 @@ class AuthController < ApplicationController
   end
 
   def refresh
-    # BROKEN!
-    # does not recreate the access_token correctly
-    access_token = Salesforce::Authentication.get_token session
-    
-    access_token = Salesforce::Authentication.refresh_session access_token
+    access_token = Salesforce::Authentication.refresh_session (Salesforce::Authentication.get_token session)
 
     Salesforce::Authentication.save_token session, access_token
 
-    render :json => access_token.to_json
+    redirect_to :controller => 'home', :action => 'index'
   end
 
 end
