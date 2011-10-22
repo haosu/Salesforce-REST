@@ -28,11 +28,7 @@ SalesforceOAuth::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-
-  config.rest_url         = /prerelna[0-9]*/
-  config.soap_url         = '.salesforce.com/services/Soap/c/22.0'
-  config.instance_version = '/services/data/v22.0'
-
+  config.instance_version = '/services/data/v23.0'
 
   config.logout_endpoint = '/secur/logout.jsp'
 
@@ -45,6 +41,4 @@ SalesforceOAuth::Application.configure do
 
   config.api_key = '3MVG9QDx8IX8nP5THIHNlvKTP7uY47MlR.y2H6AU0D1p5GKz3y9M2ZgJARLaO8Ff9j5lXo1h4ek3dEGB3ZFLV'
   config.api_secret = '2918614414129053017'
-
-  #config.compass_css_dir = 'public/stylesheets'
 end

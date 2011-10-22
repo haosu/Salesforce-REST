@@ -7,6 +7,7 @@ module Salesforce
         def get_query_url access_token, query_string
           url = access_token.params['instance_url'] + SalesforceOAuth::Application.config.instance_version + query_string
 
+
           begin
             resp = access_token.get url
           rescue Exception => e
@@ -71,6 +72,22 @@ module Salesforce
           self.get_query_url access_token, string
         end
 
+        def chatter access_token, options = {"feed"=>false, "type"=>nil, "id"=>nil}
+          url = "/chatter"
+
+          if options["feed"]
+            url += "/feeds"
+          end
+
+          url += "/#{options["type"]}"
+
+          unless options["id"].nil?
+            url += "/#{options["id"]}/feed-items"
+          end
+
+
+          self.get_query_url access_token, url
+        end
 
       end
 

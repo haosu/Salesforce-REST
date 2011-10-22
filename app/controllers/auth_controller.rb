@@ -1,5 +1,3 @@
-require 'salesforce'
-
 class AuthController < ApplicationController
   skip_before_filter :authenticate
 

@@ -58,13 +58,17 @@ SalesforceOAuth::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.rest_url         = /prerelna[0-9]*/
-  config.soap_url         = '.pre.salesforce.com/services/Soap/c/22.0/'
+  config.instance_version = '/services/data/v23.0'
+
+  config.logout_endpoint = '/secur/logout.jsp'
 
   config.redirect_uri = 'http://localhost:3000/auth/callback'
-  config.rest_site    = 'https://prerellogin.pre.salesforce.com'
-  config.refresh_site = 'https://prerellogin.pre.salesforce.com/services/oauth2/token'
+  config.rest_site    = 'https://login.salesforce.com'
+  config.refresh_site = 'https://login.salesforce.com/services/oauth2/token'
 
-  config.api_key = '3MVG9lKcPoNINVBJGjFaZV5pQA77pomvHEcr1ogmCdHPjve14M3m1Vs4EBBe5kRGjqCDXvZd_0InGIWSQmM6T'
-  config.api_secret = '1226922722376833828'
+  config.authorize_path = '/services/oauth2/authorize'
+  config.access_token_path = '/services/oauth2/token'
+
+  config.api_key = '3MVG9QDx8IX8nP5THIHNlvKTP7uY47MlR.y2H6AU0D1p5GKz3y9M2ZgJARLaO8Ff9j5lXo1h4ek3dEGB3ZFLV'
+  config.api_secret = '2918614414129053017'
 end
