@@ -58,6 +58,8 @@ SalesforceOAuth::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+
+
   config.instance_version = '/services/data/v23.0'
 
   config.logout_endpoint = '/secur/logout.jsp'
