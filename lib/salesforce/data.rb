@@ -41,6 +41,7 @@ module Salesforce
       #messages
       #groups
       #users
+      
       #http://www.salesforce.com/us/developer/docs/chatterapipre/index.htm
 
     end
