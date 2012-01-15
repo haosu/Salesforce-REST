@@ -34,6 +34,15 @@ module Salesforce
         Salesforce::Data::Rest.chatter access_token, {"feed" => true, "type" => "user-profile", "id" => id}
       end
 
+      def custom_query access_token, query
+        Salesforce::Data::Rest.custom_query access_token, query
+      end
+
+      def children_of_type access_token, id, child_sobject, key_name
+        query = "SELECT child.Id FROM #{child_sobject} child WHERE child.#{key_name}='#{id}'"
+        Salesforce::Data.custom_query access_token, query
+      end
+
       #add other functions
       #topics
       #search
@@ -41,6 +50,7 @@ module Salesforce
       #messages
       #groups
       #users
+      #joins
       
       #http://www.salesforce.com/us/developer/docs/chatterapipre/index.htm
 

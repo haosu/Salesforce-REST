@@ -1,12 +1,15 @@
+require 'uri'
+
 module Salesforce
   module Data
     
     class Rest
 
       class << self
-        def get_query_url access_token, query_string
-          url = access_token.params['instance_url'] + SalesforceOAuth::Application.config.instance_version + query_string
+        def create_request_url access_token, query_string
+          url = access_token.params['instance_url'] + SalesforceOAuth::Application.config.instance_version + query_string.gsub(/ /, "+")
 
+          puts url
 
           begin
             resp = access_token.get url
@@ -27,6 +30,10 @@ module Salesforce
           end
 
           resp
+        end
+
+        def custom_query access_token, query
+          self.create_request_url access_token, "/query/?q=#{query}"
         end
 
         def sobjects access_token, options = {"sobject"=>nil, "id"=>nil, "fields"=>nil, "action"=>nil}
@@ -57,19 +64,19 @@ module Salesforce
 
           end
 
-          self.get_query_url access_token, url
+          self.create_request_url access_token, url
         end
 
         def search access_token, string
-          self.get_query_url access_token, string
+          self.create_request_url access_token, string
         end
 
         def query access_token, string
-          self.get_query_url access_token, string
+          self.create_request_url access_token, string
         end
 
         def recent access_token, string
-          self.get_query_url access_token, string
+          self.create_request_url access_token, string
         end
 
         def chatter access_token, options = {"feed"=>false, "type"=>nil, "id"=>nil}
@@ -86,7 +93,7 @@ module Salesforce
           end
 
 
-          self.get_query_url access_token, url
+          self.create_request_url access_token, url
         end
 
       end
